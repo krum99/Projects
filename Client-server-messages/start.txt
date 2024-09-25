@@ -1,0 +1,7 @@
+1. Open the folder with VS code.
+2.Open two terminals (one for client, one for server).
+3. Execute "g++ -o server server.cpp -lws2_32" &&
+"./server.exe" in the first terminal.
+4. Execute "g++ -o client client.cpp -lws2_32" &&
+"./client.exe" in the second terminal.
+5.Ready to procces.

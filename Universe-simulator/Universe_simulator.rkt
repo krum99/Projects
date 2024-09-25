@@ -1,0 +1,172 @@
+
+; ДВЕТЕ ФУНКЦИИ ЗА ГЕНЕРИРАНЕ НА ЧИСЛА СА ВЗЕТИ ТО stackoverflow
+(define random
+  (let ((a 69069) (c 1) (m (expt 2 32)) (seed 19380110))
+    (lambda new-seed
+      (if (pair? new-seed)
+          (set! seed (car new-seed))
+          (set! seed (modulo (+ (* seed a) c) m)))
+      (/ seed m))))
+
+(define (randint . args)
+  (cond ((= (length args) 1)
+          (floor (* (random) (car args))))
+        ((= (length args) 2)
+          (+ (car args) (floor (* (random) (- (cadr args) (car args))))))
+        (else (error 'randint "usage: (randint [lo] hi)"))))
+; ДВЕТЕ ФУНКЦИИ ЗА ГЕНЕРИРАНЕ НА ЧИСЛА СА ВЗЕТИ ТО stackoverflow
+
+#|
+бозонът на Хигс - BH
+един дънен кварк и един дънен антикварк (64,8%)  -  DK, DAK
+два W бозона (14,1%) -  WB
+два глуона (8,82%) - G
+един тау лептон и един антитау лептон (7,04%)  -  TL,  ATL
+един чаровен кварк и един чаровен антикварк (това са истинските имена) (3,27%)  -  CHK, CHAK
+два Z бозона (1,59%)  - ZB
+два фотона (0,223%)   -  F
+един Z бозон и един фотон (0,111%)
+един мюон и един анти мюон (0,0244%)   -  M, AM
+един топ кварк и един топ антикварк (0,0216%)  -  TK, TAK
+
+
+позитрон и неутрино   -   P, N
+антинеутрино - AN
+долен кварк (различен от дънния) и долен антикварк (15,2%) - DOK, DOAK
+странен кварк и странен антикварк (15,2%) - SK, SAK
+горен кварк (различен от топ кварка) и горен антикварк - GK, GAK 
+
+
+
+DEGRADABLE = BH, WB, ZB, TK, TAK
+|#
+
+(define degradable '("BH", " WB", "ZB", "TK", "TAK"))
+
+
+;244, 1 354, 3 584, 19 484, 52184, 122 584, 210 784, 351 784, 999 784
+(define decay-HB
+  (lambda () 
+  (let ((num (randint 1000000)))
+    (cond ((<  num 245) '("TK", "TAK"))
+          ((and (> num 244) (< num 1355)) '("ZB", "F"))
+          ((and (> num 1354) (< num 3585)) '("F", "F"))
+          ((and (> num 3584) (< num 19485)) '("ZB", "ZB"))
+          ((and (> num 19484) (< num 52185)) '("CHK", "CHAK"))
+          ((and (> num 52184) (< num 122585)) '("TL", "ATL"))
+          ((and (> num 122584) (< num 210785)) '("G", "G"))
+          ((and (> num 210785) (< num 351785)) '("WB", "WB"))
+          (else '("DK", "DAK"))))))
+
+;244, 1 354, 3 584, 19 484, 52184, 122 584, 210 784, 351 784, 999 784
+(define decay-WB
+  (lambda () 
+  (let ((num (randint 1000000)))
+    (cond ((<  num 245) '("TK", "TAK"))
+          ((and (> num 244) (< num 1355)) '("ZB", "F"))
+          ((and (> num 1354) (< num 3585)) '("F", "F"))
+          ((and (> num 3584) (< num 19485)) '("ZB", "ZB"))
+          ((and (> num 19484) (< num 52185)) '("CHK", "CHAK"))
+          ((and (> num 52184) (< num 122585)) '("TL", "ATL"))
+          ((and (> num 122584) (< num 210785)) '("G", "G"))
+          ((and (> num 210785) (< num 351785)) '("WB", "WB"))
+          (else '("DK", "DAK"))))))
+
+;244, 1 354, 3 584, 19 484, 52184, 122 584, 210 784, 351 784, 999 784
+(define decay-HB
+  (lambda () 
+  (let ((num (randint 1000000)))
+    (cond ((<  num 245) '("TK", "TAK"))
+          ((and (> num 244) (< num 1355)) '("ZB", "F"))
+          ((and (> num 1354) (< num 3585)) '("F", "F"))
+          ((and (> num 3584) (< num 19485)) '("ZB", "ZB"))
+          ((and (> num 19484) (< num 52185)) '("CHK", "CHAK"))
+          ((and (> num 52184) (< num 122585)) '("TL", "ATL"))
+          ((and (> num 122584) (< num 210785)) '("G", "G"))
+          ((and (> num 210785) (< num 351785)) '("WB", "WB"))
+          (else '("DK", "DAK"))))))
+
+;244, 1 354, 3 584, 19 484, 52184, 122 584, 210 784, 351 784, 999 784
+(define decay-HB
+  (lambda () 
+  (let ((num (randint 1000000)))
+    (cond ((<  num 245) '("TK", "TAK"))
+          ((and (> num 244) (< num 1355)) '("ZB", "F"))
+          ((and (> num 1354) (< num 3585)) '("F", "F"))
+          ((and (> num 3584) (< num 19485)) '("ZB", "ZB"))
+          ((and (> num 19484) (< num 52185)) '("CHK", "CHAK"))
+          ((and (> num 52184) (< num 122585)) '("TL", "ATL"))
+          ((and (> num 122584) (< num 210785)) '("G", "G"))
+          ((and (> num 210785) (< num 351785)) '("WB", "WB"))
+          (else '("DK", "DAK"))))))
+
+;244, 1 354, 3 584, 19 484, 52184, 122 584, 210 784, 351 784, 999 784
+(define decay-HB
+  (lambda () 
+  (let ((num (randint 1000000)))
+    (cond ((<  num 245) '("TK", "TAK"))
+          ((and (> num 244) (< num 1355)) '("ZB", "F"))
+          ((and (> num 1354) (< num 3585)) '("F", "F"))
+          ((and (> num 3584) (< num 19485)) '("ZB", "ZB"))
+          ((and (> num 19484) (< num 52185)) '("CHK", "CHAK"))
+          ((and (> num 52184) (< num 122585)) '("TL", "ATL"))
+          ((and (> num 122584) (< num 210785)) '("G", "G"))
+          ((and (> num 210785) (< num 351785)) '("WB", "WB"))
+          (else '("DK", "DAK"))))))
+
+(define decay-HB?
+  (lambda ()
+    (< (randint 1000000) 433)))
+
+(define decay-WB?
+  (lambda ()
+    (< (randint 100) 50)))
+
+(define decay-ZB?
+  (lambda ()
+    (< (randint 100) 50)))
+
+(define decay-TK?
+  (lambda ()
+    (< (randint 10000) 1295)))
+
+(define decay-TAK?
+  (lambda ()
+    (< (randint 10000) 1295)))
+
+(define (decay-dispatcher atom)
+  (cond ((eq? atom "BH") (decay-BH))
+        ((eq? atom "WB") (decay-WB))
+        ((eq? atom "ZB") (decay-ZB))
+        ((eq? atom "TK") (decay-TK))
+        (else (decay-TAK))))
+
+(define (decay-dispatcher? atom)
+  (cond ((eq? atom "BH") (decay-BH?))
+        ((eq? atom "WB") (decay-WB?))
+        ((eq? atom "ZB") (decay-ZB?))
+        ((eq? atom "TK") (decay-TK?))
+        (else (decay-TAK?))))
+
+
+(define (simulation-H atoms diff)
+  (if (null? atoms) (display "END")
+      (begin (if diff (begin (display atoms) (newline)))   (simulation-H
+                                              (map (lambda (a) (if (decay-dispatcher? a) (decay-dispatcher a) a)) (filter (lambda (x) (not (null? (memv x degradable))))atoms))
+                                              (not (equal? (map (lambda (a) (if (decay-dispatcher? a) (decay-dispatcher a) a)) atoms) atoms))))))
+
+(define (simulation atoms)
+  (simulation-H atoms #f))
+
+  
+#|  (if diff (begin (display atoms) (newline) (simulation-H
+                                              (map (lambda (a) (if (decay-dispatcher? a) (decay-dispatcher a) a)) atoms)
+                                              (not (equal? (map (lambda (a) (if (decay-dispatcher? a) (decay-dispatcher a) a)) atoms) atoms))))
+  (map (lambda (a) (if (decay-dispatcher? a) (decay-dispatcher a) a)) atoms)
+ ) |#
+
+(define (my-test a b)
+  (display a ) (newline)
+  (+ a b))
+  
+
