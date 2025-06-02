@@ -6,7 +6,7 @@ using namespace std;
 #pragma comment(lib, "ws2_32.lib")
 
 int main() {
-    // Инициализиране на Winsock
+    // Initialize Winsock
     WSADATA wsaData;
     WORD version = MAKEWORD(2, 2);
     int error = WSAStartup(version, &wsaData);
@@ -15,7 +15,7 @@ int main() {
         return 1;
     }
 
-    // Създаване на сокет
+    // Socket creation
     SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (clientSocket == INVALID_SOCKET) {
         cout << "Creation winsock error " << WSAGetLastError() << endl;
@@ -23,13 +23,13 @@ int main() {
         return 1;
     }
 
-    // Избор на сървър
+    // Choose server
     sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(8888);
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-    // Свързване към сървъра
+    // Server connection
     error = connect(clientSocket, (sockaddr*)&serverAddr, sizeof(serverAddr));
     if (error == SOCKET_ERROR) {
         cout << "Connection error " << WSAGetLastError() << endl;
@@ -38,7 +38,6 @@ int main() {
         return 1;
     }
 
-    // Въвеждане на броя нишки и масива от цели числа
     int numThreads;
     cout << "Input num of the threads ";
     cin >> numThreads;
@@ -53,7 +52,7 @@ int main() {
         cin >> arr[i];
     }
 
-    // Изпращане на броя нишки и масива на сървъра
+    // Send array and numThreads
     error = send(clientSocket, (char*)&numThreads, sizeof(numThreads), 0);
     if (error == SOCKET_ERROR) {
         cout << "Error with sending the num threads: " << WSAGetLastError() << endl;
@@ -77,7 +76,7 @@ int main() {
     WSACleanup();
     return 1;
     }
-// Получаване на сортирания масив от сървъра
+// Receive sorted array
 error = recv(clientSocket, (char*)arr, sizeof(int) * arrSize, 0);
 if (error == SOCKET_ERROR) {
     cout << "Error with receiving the array: " << WSAGetLastError() << endl;
@@ -86,14 +85,13 @@ if (error == SOCKET_ERROR) {
     return 1;
 }
 
-// Извеждане на сортирания масив
+// Print sorted array
 cout << "The sorted array is: ";
 for (int i = 0; i < arrSize; i++) {
     cout << arr[i] << " ";
 }
 cout << endl;
 
-// Затваряне на сокета и освобождаване на ресурсите
 closesocket(clientSocket);
 WSACleanup();
 delete[] arr;
