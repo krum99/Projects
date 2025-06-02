@@ -21,7 +21,6 @@ void selectionSort(vector<int>& arr, int start, int end) {
     }
 }
 
-// Функция за сливане на два сортирани масива
 void merge(vector<int>& arr, int start, int mid, int end) {
     vector<int> temp(end - start);
     int i = start, j = mid, k = 0;
@@ -45,7 +44,6 @@ void merge(vector<int>& arr, int start, int mid, int end) {
     copy(temp.begin(), temp.end(), arr.begin() + start);
 }
 
-// Функция за паралелен Selection Sort и сливане на резултатите
 void parallelSelectionSort(vector<int>& arr, int numThreads) {
     int size = arr.size();
     int chunkSize = size / numThreads;
@@ -70,7 +68,7 @@ void parallelSelectionSort(vector<int>& arr, int numThreads) {
     }
 }
 int main() {
-// Инициализиране на Winsock
+// Winsock initialization
 WSADATA wsaData;
 WORD version = MAKEWORD(2, 2);
 int error = WSAStartup(version, &wsaData);
@@ -79,7 +77,7 @@ cout << "Initialize error with the winsock: " << error << endl;
 return 1;
 }
 
-// Създаване на сокет
+// Create socket
 SOCKET listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 if (listenSocket == INVALID_SOCKET) {
     cout << "Creation error of the socket: " << WSAGetLastError() << endl;
@@ -87,7 +85,7 @@ if (listenSocket == INVALID_SOCKET) {
     return 1;
 }
 
-// Свързване на сокета към порт 8888
+// Connect socket to port 8888
 sockaddr_in serverAddr;
 serverAddr.sin_family = AF_INET;
 serverAddr.sin_port = htons(8888);
@@ -101,7 +99,7 @@ if (error == SOCKET_ERROR) {
     return 1;
 }
 
-// Очакване на входящи връзки от клиенти
+// Listen for client
 error = listen(listenSocket, SOMAXCONN);
 if (error == SOCKET_ERROR) {
     cout << "Listening error of the socket: " << WSAGetLastError() << endl;
@@ -111,7 +109,7 @@ return 1;
 }
 cout << "The server is ready to receive connections." << endl;
 
-// Приемане на входяща връзка от клиент
+// Accept client 
 SOCKET clientSocket;
 sockaddr_in clientAddr;
 int clientAddrSize = sizeof(clientAddr);
@@ -123,7 +121,6 @@ if (clientSocket == INVALID_SOCKET) {
     return 1;
 }
 
-// Получаване на броя на нишките и масива от клиента
 int numThreads;
 error = recv(clientSocket, (char*)&numThreads, sizeof(numThreads), 0);
 if (error == SOCKET_ERROR) {
@@ -144,7 +141,6 @@ if (error == SOCKET_ERROR) {
     return 1;
 }
 
-// Получаване на масива от клиента
 vector<int> arr(arrSize);
 error = recv(clientSocket, (char*)arr.data(), sizeof(int) * arrSize, 0);
 if (error == SOCKET_ERROR) {
@@ -160,7 +156,7 @@ parallelSelectionSort(arr, numThreads);
 //    cout<<arr[i];
 //}
 cout<<endl;
-// Изпращане на сортирания масив обратно на клиента
+// Send sorted array back to the client
 error = send(clientSocket, (char*)arr.data(), sizeof(int) * arrSize, 0);
 if (error == SOCKET_ERROR) {
     cout << "Error with sending the sorted array: " << WSAGetLastError() << endl;
@@ -170,11 +166,10 @@ if (error == SOCKET_ERROR) {
     return 1;
 }
 
-// Затваряне на връзката с клиента и на слушащия сокет
+// Close connection
 closesocket(clientSocket);
 closesocket(listenSocket);
-
-// Изчистване на Winsock
+    
 WSACleanup();
 
 return 0;
